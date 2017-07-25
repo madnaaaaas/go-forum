@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title.Name}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a> &#187;
+			<a class="forum" href="/forum/{{.Forum.Id}}"> {{.Forum.Name}}</a> &#187;
+			<a class="forum">{{ .Title.Name}}</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			{{range .Body}}
+				<a class="basic" href="/theme/{{.Id}}">{{ .Name }}</a>
+				{{ if $Log }}
+					{{if or ($Own.Group.Admin) ($Own.Group.Moderator) }}
+						<div style="float: right"><a class="forum" href="/deletetheme/{{ .Id }}">Delete Theme</a></div>
+					{{end}}
+				{{end}}
+				<br>
+				<a class="description">{{ .Description }}</a>
+				<br>
+				<a class="creator" href="/user/{{.CreatorNickname}}">{{ .CreatorNickname }}</a>
+				<br>
+				<hr>
+			{{else}}
+				<a class="info">No Themes</a>
+				<hr>
+			{{end}}
+			{{ if .Log }}
+				{{if .Own.Group.ReadOnly }}
+				{{else}}
+					<form action="/newtheme/{{.Title.Id}}"><button>Create new Theme</button></form>
+				{{end}}
+			{{end}}
+		</div>
+	</body>
+</html>

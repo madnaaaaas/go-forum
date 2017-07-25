@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a>
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<a class="forum">New Group</a>
+			<form action="/creategroup/" method="POST">
+				<a class="basic">Name: </a><input maxlength="25" size="40" name="name">
+				<br>
+				<a class="basic">Admin: </a><select size="1" name="admin"><option>True</option><option>False</option></select>
+				<br>
+				<a class="basic">ReadOnly: </a><select size="1" name="readonly"><option>True</option><option>False</option></select>
+				<br>
+				<a class="basic">Untouchable: </a><select size="1" name="untouchable"><option>True</option><option>False</option></select>
+				<br>
+				<a class="basic">Moderator: </a><select size="1" name="moderator"><option>True</option><option>False</option></select>
+				<div><input type="submit" value="Create"></div>
+			</form>
+			<hr>
+		</div>
+	</body>
+</html>

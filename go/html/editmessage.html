@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title.Name}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a> &#187;
+			<a class="forum" href="/forum/{{.Forum.Id}}"> {{.Forum.Name}}</a> &#187;
+			<a class="forum" href="/subforum/{{.Subforum.Id}}"> {{.Subforum.Name}}</a> &#187;
+			<a class="forum">{{ .Title.Name}}</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ $Mes := .Edited }}
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<a class="basic">{{ .Title.Description }}</a>
+			<br>
+			<a class="creator" href="/user/{{.Title.CreatorNickname}}">{{ .Title.CreatorNickname }}</a>
+			<hr>
+			{{range .Body}}
+				{{ if eq (.Id) ($Mes.Id) }}
+					<form action="/saveeditmessage/{{.Id}}" method="POST">
+						<textarea name="message" rows="2" cols="122" autofocus>{{ printf "%s" .Text }}</textarea>
+						<br>
+						<input type="submit" value="Save">
+						<a class="creator" href="/user/{{.CreatorNickname}}">{{ .CreatorNickname }}</a>
+						<a class="creator">{{ .Date }}</a>
+						<br>
+					</form>
+				{{ else }}
+					<a class="basic">{{ .Text }}</a>
+					<br>
+					<a class="creator" href="/user/{{.CreatorNickname}}">{{ .CreatorNickname }}</a>
+					<a class="creator">{{ .Date }}</a>
+					<br>
+				{{ end }}
+				<hr>
+			{{else}}
+				<a class="info">No Messages</a>
+				<hr>
+			{{end}}	
+		</div>
+	</body>
+</html>

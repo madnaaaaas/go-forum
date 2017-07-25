@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title.Name}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a> &#187;
+			<a class="forum" href="/forum/{{.Forum.Id}}"> {{.Forum.Name}}</a> &#187;
+			<a class="forum" href="/subforum/{{.Subforum.Id}}"> {{.Subforum.Name}}</a> &#187;
+			<a class="forum">{{ .Title.Name}}</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<a class="basic">{{ .Title.Description }}</a>
+			<br>
+			<a class="creator" href="/user/{{.Title.CreatorNickname}}">{{ .Title.CreatorNickname }}</a>
+			<hr>
+			{{range .Body}}
+				<a class="basic">{{ .Text }}</a>
+				<br>
+				<a class="creator" href="/user/{{.CreatorNickname}}">{{ .CreatorNickname }}</a>
+				<a class="creator">{{ .Date }}</a>
+				{{ if and ($Log) (or ($Own.Group.Admin) ($Own.Group.Moderator)) }}
+					<div style="float: right; padding-left: 10px"><a class="forum" href="/editmessage/{{.Id}}">edit</a></div>
+					<div style="float: right"><a class="forum" href="/deletemessage/{{ .Id }}">delete</a></div>
+				{{ end }}
+				<br>
+				<hr>
+			{{else}}
+				<a class="info">No Messages</a>
+				<hr>
+			{{end}}
+			{{ if .Log}}
+				{{ if .Own.Group.ReadOnly }}
+					<a class="info">You're in ReadOnly group</a>
+				{{ else }}
+					<form action="/send/{{.Title.Id}}" method="POST">
+						<a class="basic">Message: </a><div><textarea name="message" rows="2" cols="122"></textarea></div>
+						<br>
+						<div><input type="submit" value="Send"></div>
+					</form>
+				{{ end }}
+			{{ else }}
+				<a class="info">Only registered users can write messages</a>
+			{{ end }}	
+		</div>
+	</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a>
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<a class="forum">Register</a>
+			<form action="/donereg/" method="POST">
+				<a class="basic">Nickname: </a><input maxlength="25" size="40" name="nickname">
+				<br>
+				<a class="basic">Enter Password: </a><input type="password" maxlength="25" size="40" name="password">
+				<br>
+				<a class="basic">Repeat Password: </a><input type="password" maxlength="25" size="40" name="reppassword">
+				<br>
+				<a class="basic">Info: </a><div><textarea name="info" rows="5" cols="50"></textarea></div>
+				<br>
+				<div><input type="submit" value="Register"></div>
+			</form>
+			<hr>
+		</div>
+	</body>
+</html>

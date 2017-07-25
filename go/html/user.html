@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<a class="basic">User : {{ .Body.Nickname }}</a>
+			<br>
+			<a class="basic">Group : </a>
+			<a class="basic" href="/group/{{.Body.GroupName}}">{{.Body.GroupName}}</a>
+			<br>
+			<a class="basic">Info : {{.Body.Info}}</a>
+			<hr>
+			{{ if $Log }}
+				{{if $Own.Group.Admin }}
+					<form action="/edituser/{{ .Body.Nickname }}"><button>Edit</button></form>
+				{{end}}
+			{{end}}
+		</div>
+	</body>
+</html>

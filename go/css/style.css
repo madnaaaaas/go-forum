@@ -1,0 +1,29 @@
+.forum {
+	color: #120F0F;
+	font-size: 15px;
+}
+
+.basic {
+	color: #A19696;
+	font-size: 20px;
+}
+
+.description {
+	color: #A19696;
+	font-size: 15px;
+}
+
+.creator {
+	color: #A19696;
+	font-size: 15px;
+}
+
+.info {
+	color: red;
+	font-size: 15px;
+}
+
+#siteMain {
+	width: 1000px;
+	margin: auto;
+}

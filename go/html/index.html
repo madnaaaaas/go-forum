@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>{{.Title}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum">Index</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ if .Log }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			{{range .Body}}
+				<hr>
+				<a class="forum" href="/forum/{{.Title.Id}}">{{ .Title.Name }}</a>
+				{{ if $Log }}
+					{{if $Own.Group.Admin }}
+						<div style="float: right"><a class="forum" href="/deleteforum/{{.Title.Id}}">Delete Forum</a></div>
+					{{end}}
+				{{end}}
+				<br>
+				{{range .Body}}
+					<a class="basic" href="/subforum/{{.Id}}">{{ .Name }}</a>
+					{{ if $Log }}
+						{{if $Own.Group.Admin }}
+							<div style="float: right"><a class="forum" href="/deletesubforum/{{.Id}}">Delete Subforum</a></div>
+						{{end}}
+					{{end}}
+					<br>
+					<a class="description">{{ .Description }}</a>
+					<br>
+				{{else}}
+					<a class="info">No Subforums</a>
+				{{end}}
+				{{ if $Log }}
+					{{if $Own.Group.Admin }}
+						<form action="/newsubforum/{{.Title.Id}}"><button>Create new Subforum</button></form>
+					{{end}}
+				{{end}}
+			{{else}}
+				<hr>
+				<a class="info">No Forums</a>
+			{{end}}
+			<hr>
+			{{ if $Log }}
+				{{if $Own.Group.Admin }}
+					<form action="/newforum/"><button>Create new Forum</button></form>
+				{{end}}
+			{{end}}
+		</div>
+	</body>
+</html>

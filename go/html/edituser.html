@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="/css/style.css">
+		<title>Editing {{.Title}}</title>
+	</head>
+	<body>
+		<div id="siteMain">
+			<a class="forum" href="/index">Index</a>
+			{{ $Log := .Log }}
+			{{ $Own := .Own }}
+			{{ if .Log}}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/user/{{.Own.User.Nickname}}">{{.Own.User.Nickname}}</a></div>
+				<div style="float: right"><a class="forum" href="/logout">logout</a></div>
+			{{ else }}
+				<div style="float: right; padding-left: 10px"><a class="forum" href="/login">login</a></div>
+				<div style="float: right"><a class="forum" href="/register">register</a></div>
+			{{ end }}
+			<div style="float: right; padding-right: 10px"><a class="forum" href="/members">members</a></div>
+			<br>
+			<hr>
+			<form action="/saveuser/{{ .Body.Nickname }}" method="POST">
+				<a class="basic">Editing User : {{ .Body.Nickname }}</a>
+				<br>
+				<a class="basic">Group : </a>
+				<select size="1" name="group">
+				{{ range .Groups }}
+					<option>{{ .Name }}</option>
+				{{ end }} 
+				</select>
+				<br>
+				<a class="basic">Info: </a><div><textarea name="info" rows="5" cols="50">{{printf "%s" .Body.Info}}</textarea></div>
+				<hr>
+				<div><input type="submit" value="Save"></div>
+			</form>
+		</div>
+	</body>
+</html>
